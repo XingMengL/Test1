@@ -34,7 +34,7 @@ void InsertSort(int * array, int size)
 			pre--;
 		 }
 
-		 array[pre+1] = key;//²åÈë  array[pre] < key
+		 array[pre+1] = key;// ²åÈë  array[pre] < key
 	}
 }
 void ShellSort(int* array,int size)
