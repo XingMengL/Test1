@@ -18,7 +18,7 @@
  18   a = a ^ b;
  19   b = a ^ b;
  20   a = a ^ b;
- 21   printf("a=%d b=%d\n",a ,b);                                                                                    
+ 21   printf("a=%d b=%d\n",a ,b );                                                                                    
  22   return 0;
  23 }
 ~
