@@ -34,7 +34,7 @@ void InsertSort(int * array, int size)
 			pre--;
 		 }
 
-		 array[pre+1] = key;// 插入  array[pre] < key
+		 array[pre+1] = key;//插入  array[pre] < key
 	}
 }
 void ShellSort(int* array,int size)
@@ -133,7 +133,94 @@ void BubbleSort(int* array,int size)
 			}
 	}
 }
+/*void AdjustDn(int* array, int size,int parent)
+{
+	//优先标记左孩子 
+	int child = parent * 2 + 1;
+	while(child < size )
+	{
+		//找到最大的孩子
+		//child+1<size保证右孩子的存在
+		if(child+1 < size && array[child+1] > array[child])
+			child += 1;
+		//
+		if(array[child] > array[parent])
+		{
+			Swap(&array[child],&array[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			return;
+		}
+	}
 
+}
+void HeapSort(int* array,int size)
+{
+
+	int end = size - 1;
+	//建堆
+	//1 找最后一个非叶子节点：最后一个叶子的双亲 （size-2）>> 1
+	//2 从倒数第一个非叶子节点到根节点的位置开始向下调整
+	int root = (size - 2)>>1;
+	for(root; root >= 0;root--)
+	{
+		AdjustDn(array,size,root);
+	}
+	//利用堆删除的思想进行排序
+	while(end)
+	{
+		Swap(&array[0],&array[end]);
+		AdjustDn(array,end,0);//XML
+		end--;
+
+	}
+
+}*/
+
+void AdjustDn(int* array,int size, int parent)//参数：所需调整二叉树的数据，所需调整二叉树非叶子节点的个数，所需调整非叶子节点的位置
+{
+	//找到需要调整非叶子节点的最大孩子节点位置
+	//优先标记左孩子的位置，因为右孩子可能不存在 如 child+1 > size 则右孩子不存在
+	int child = 2 * parent + 1;
+	while(child < size)
+	{
+	if( child + 1 < size&&array[child+1] > array[child])//要保证右孩子的存在 child+1<size
+		child +=1;
+	if(array[child] > array[parent])
+	{
+		Swap(&array[child],&array[parent]);
+		parent = child;
+		child = 2 * parent + 1;
+	}
+	else
+		return;
+	
+	}
+}
+void HeapSort(int * array, int size)
+{
+	//建堆
+	//找到最后一个非叶子节点的位置 从最后一个非叶子节点到根向下调整
+	int root = (size-2)>>1;
+	int end = size - 1;//最后一个元素下标
+
+	for(root;root>= 0;root--)
+	{
+		AdjustDn(array,size,root);
+	}
+	//排序 利用堆删除的思想
+	while(end)
+	{
+		Swap(&array[0],&array[end]);
+		AdjustDn(array,end,0);
+		end--;
+	}
+}
+//大堆排序--->升序
+//小堆排序--->降序
 void TestSort()
 {
 	int array[] = {1,5,3,2,6,9,4,1,0};
@@ -143,8 +230,8 @@ void TestSort()
 	//ShellSort(array,size);
 	//SelectSort(array,size);
 	//SelectSortOP(array,size);
-	BubbleSort(array,size);
-
+	//BubbleSort(array,size);
+	HeapSort(array,size);
 	Print(array,size);
 	
 }
