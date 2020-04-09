@@ -221,6 +221,38 @@ void HeapSort(int * array, int size)
 }
 //大堆排序--->升序
 //小堆排序--->降序
+/*int Partion(int* array,int left,int right)
+{
+	int begin = left;
+	int end = right - 1;
+	int key = array[end];
+	while( begin < end)
+	{
+		while( begin < end && array[begin] <= key )
+			   begin++;
+		while( end > begin && array[end] >= key)//从后往前找小于基准值的数 
+				end--;
+		
+
+		if(begin < end)
+			Swap(&array[begin],&array[end]);
+	
+	}
+	Swap(&array[begin],&array[right-1]);
+	return begin;
+}
+void QuickSort(int* array, int left, int right)
+{
+      int div = 0;
+
+	  if(right - left > 1)
+	{
+	 div = Partion(array,left,right);
+	 QuickSort(array,left,div);
+	 QuickSort(array,div+1,right);	
+	}
+
+}*/
 void TestSort()
 {
 	int array[] = {1,5,3,2,6,9,4,1,0};
@@ -231,7 +263,8 @@ void TestSort()
 	//SelectSort(array,size);
 	//SelectSortOP(array,size);
 	//BubbleSort(array,size);
-	HeapSort(array,size);
+	//HeapSort(array,size);
+	//QuickSort(array,0,size);
 	Print(array,size);
 	
 }
