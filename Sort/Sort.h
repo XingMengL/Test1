@@ -253,6 +253,52 @@ void QuickSort(int* array, int left, int right)
 	}
 
 }*/
+//左闭右开[left,right)
+int Centor(int* array,int left, int right)
+{
+		int centor = (left + right ) >> 1;
+		if(array[left] < array[centor])
+			Swap(&array[left],&array[centor]);
+		if(array[left] < array[right - 1])
+			Swap(&array[left],&array[right - 1]);
+		if(array[centor] < array[right - 1]);
+		Swap(&array[centor],&array[right - 1]);
+
+		return centor;
+}
+int Partion(int* array, int left, int right)
+{
+	int begin = left;
+	int end = right - 1;
+	int key =0;
+	int mid = Centor(array,left,right);
+	Swap(&array[mid],&array[right - 1]);//XML  将中间值与最右侧值交换
+	key = array[end];
+
+	while(begin < end)
+	{
+		while(begin < end && array[begin] <= key)//从前到后找小于基准值小的下标
+	           begin++;
+		while(begin < end && array[end] >= key)
+			   end--;
+		if(begin < end )
+			Swap(&array[begin],&array[end]);
+	}
+	Swap(&array[begin],&array[right - 1]);
+	return begin;
+}
+void QuickSort(int* array, int left, int right)
+{
+	int div = 0;//基准值下标
+	if(left < right)
+	{
+	 div = Partion(array,left,right);
+	 QuickSort(array,left,div);
+	 QuickSort(array,div+1,right);
+	
+	}
+
+}
 void TestSort()
 {
 	int array[] = {1,5,3,2,6,9,4,1,0};
@@ -264,7 +310,7 @@ void TestSort()
 	//SelectSortOP(array,size);
 	//BubbleSort(array,size);
 	//HeapSort(array,size);
-	//QuickSort(array,0,size);
+	QuickSort(array,0,size);
 	Print(array,size);
 	
 }
