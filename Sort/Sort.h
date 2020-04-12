@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <windows.h>
+#include <string.h>
 #include "Stack.h"
 
 void Print(int * array, int size)
@@ -335,6 +336,59 @@ void QuickSortNor(int* array,int size)
 	}
 
 }
+
+void MergeData(int* array,int left,int right,int mid,int* temp)//将两组有序的数组归并为一个有序的数组
+{
+	int begin1 = left,end1 = mid;
+	int begin2 = mid,end2 = right;
+	int index = left;
+
+	while(begin1 < end1 && begin2 < end2)
+	{
+		if(array[begin1] <= array[begin2])
+			temp[index++] = array[begin1++];
+		else
+			temp[index++] = array[begin2++];
+	
+	}//循环结束后一个数组的值已经搬运完成
+	while(begin1 < end1)
+	{
+	 temp[index++] = array[begin1++];
+	}
+	while(begin2 < end2)
+	{
+	temp[index++] = array[begin2++];
+	}
+}
+//将数据均分为两部分，对左右两半部分继续进行划分直到划分为数组中只有一个数据 过程是递归的 
+//在划分完成后 对两个有序数组进行归并  过程是递归的 递归结束后数据有序 
+void _MergeSort(int* array,int left,int right,int *temp)
+{
+	   int mid = 0;
+	if(right - left > 1)
+	{
+		 mid = left + ((right - left)>>1);
+		 mid = (right + left) >>1;
+		_MergeSort(array,left,mid,temp);
+		_MergeSort(array,mid,right,temp);
+		MergeData(array,left,right,mid,temp);
+		memcpy(array+left,temp+left,sizeof(array[0])*(right - left));
+	
+	}
+}
+void MergeSort(int* array,int size)
+{
+	int* temp = (int*)malloc(sizeof(array[0])*size);
+	if(NULL == temp)
+	{
+		assert(0);
+		return;
+	}
+	_MergeSort(array,0,size,temp);
+	
+	free(temp);
+}
+
 void TestSort()
 {
 	int array[] = {1,5,3,2,6,9,4,1,0};
@@ -347,7 +401,8 @@ void TestSort()
 	//BubbleSort(array,size);
 	//HeapSort(array,size);
 	// QuickSort(array,0,size);
-	  QuickSortNor(array,size);
+	 // QuickSortNor(array,size);
+	MergeSort(array,size);
 	Print(array,size);
 	
 }
