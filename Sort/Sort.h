@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <windows.h>
+#include "Stack.h"
 
 void Print(int * array, int size)
 {
@@ -102,10 +103,10 @@ void SelectSortOP(int* array,int size)
 			Swap(&array[maxPos],&array[end]);
 		//在交换后要及时的更新minPos的标记位置
 		if(minPos == end)//XML
-			minPos = maxPos;
-			//Swap(&array[maxPos],&array[begin]);
-		if(minPos != begin)
-			Swap(&array[minPos],&array[begin]);
+minPos = maxPos;
+		//Swap(&array[maxPos],&array[begin]);
+   if(minPos != begin)
+	Swap(&array[minPos],&array[begin]);
 
 		begin++;
 		end--;
@@ -299,6 +300,41 @@ void QuickSort(int* array, int left, int right)
 	}
 
 }
+void QuickSortNor(int* array,int size)
+{
+	Stack s;
+	int left = 0;
+	int right = 0; 
+	StackInit(&s);
+	
+	//将数据整体的区间入栈  左闭右开[0, size) [left,rignt)
+	StackPush(&s, size);
+	StackPush(&s, 0);
+
+	while(!StackEmpty(&s))
+	{
+		left = StackTop(&s);
+		StackPop(&s);
+		right = StackTop(&s);
+		StackPop(&s);
+
+		if(right - left > 1)
+		{
+			int div = Partion(array,left,right);
+			//div是基准值的位置
+			//基准值的左侧[left,div)
+			//基准值的右侧[div+1,right)
+
+			StackPush(&s,right);
+			StackPush(&s,div+1);
+
+			StackPush(&s,div);
+			StackPush(&s,left);
+
+		}
+	}
+
+}
 void TestSort()
 {
 	int array[] = {1,5,3,2,6,9,4,1,0};
@@ -310,7 +346,8 @@ void TestSort()
 	//SelectSortOP(array,size);
 	//BubbleSort(array,size);
 	//HeapSort(array,size);
-	QuickSort(array,0,size);
+	// QuickSort(array,0,size);
+	  QuickSortNor(array,size);
 	Print(array,size);
 	
 }
