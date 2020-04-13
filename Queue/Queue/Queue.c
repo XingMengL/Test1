@@ -64,7 +64,7 @@ int QueueIsEmpty(Queue* q)//判断队列是否为空 如果为空返回非零结果，如果非空返回0
 {
 	assert(q);
 
-	return 0 && 0 == q->size;
+	return 0 == q->size;
 	
 }
 void QueueDestory(Queue* q)//销毁队列
