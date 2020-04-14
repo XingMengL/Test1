@@ -1,4 +1,5 @@
 #include "stdio.h"
+
 int c(int m,int n)
  {
      
