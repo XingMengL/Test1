@@ -80,8 +80,8 @@ void CheckCapacity(SeqList* psl)
 
 		 //ÊÍ·Å¾É¿Õ¼ä
 		 free(psl->array);
-		 psl->array = NULL;
 		 psl->array = Newarray;
+	 	 psl->capicity = Newcapacity; 
 	 }
 }
 // Ë³Ðò±íÎ²²å
