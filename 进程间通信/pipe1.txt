@@ -1,0 +1,41 @@
+#include <stdio.h>
+    2 #include <unistd.h>                                        
+    3 #include <string.h>
+    4 
+    5 
+    6 int main()
+    7 {
+    8   int pipefd[2];
+    9   int ret = pipe(pipefd);//创建管道，在创建子进程之前
+   10   if( ret < 0 )
+   11   {
+   12     perror("piie error");
+   13     return -1;
+   14   }
+   15 
+   16   pid_t pid = fork();//创建一个子进程
+   17   if(pid == 0)
+   18   {
+   19   //子进程,从管道读取数据
+   20 
+   21   sleep(1);
+   22   close(pipefd[1]);
+   23   char buf[1024] = {0};
+W> 24   int ret = read(pipefd[0],buf,1023);
+   25   printf("子进程读到数据： %s\n",buf);
+   26   }
+   27   else
+   28   
+   29   {
+   30     //父进程，向管道写入数据
+   31     sleep(1000);
+   32     close(pipefd[1]);  
+W> 33     char* ptr = "你好再见";
+   34  int ret = write(pipefd[1],ptr,strlen(ptr));
+   35     printf("父进程写完");
+   36      
+   37   }
+   38 
+   39   return 0;
+   40 }                    
+
